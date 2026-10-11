@@ -5,20 +5,20 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 ---
 
 ## 📂 Lab Index & Navigation
-
-| Module                                                                  | Focus Area                                                       |
-| :---------------------------------------------------------------------- | :--------------------------------------------------------------- |
-| [**01. EC2 Provisioning**](./01-ec2-provisioning)                       | AWS compute lifecycle & baseline HCL deployment                  |
-| [**02. GitHub Provider**](./02-github-provider)                         | API resource management & Zero Trust credential injection        |
-| [**03. IAM User**](./03-iam-user)                                       | Least-privilege identity & access policies                       |
-| [**04. Provider Versioning**](./04-provider-versioning)                 | Pessimistic constraint pinning (`~>`) & dependency lockfiles     |
-| [**05. Security Groups & Rule Decoupling**](./05-firewall-provision)    | Standalone rule resources & dynamic data lookups                 |
-| [**06. Elastic IP Creation**](./06-elastic-ip-creation)                 | VPC-scoped static IPs & configuration drift remediation          |
-| [**07. Attribute Referencing & Data Sources**](./07-attribute-creation) | Implicit dependencies, dynamic AMI lookups, & attribute tracking |
-| [**08. Cross Reference Attributes**](./08-cross-reference-attributes)   | Dynamic security group rule bindings & dependency mapping        |
-| [**09. Outputs**](./09-outputs) | Resource attribute exposure, scalar parsing, & sensitive value handling |
-| [**10. Input Variables**](./10-variables) | Parameterization, type constraints, default values, & validation |
-
+<!-- LAB_INDEX_START -->
+| Lab Module | Directory Path |
+| :--- | :--- |
+| [**01. Ec2 Provisioning**](./01-ec2-provisioning) | `01-ec2-provisioning` |
+| [**02. Github Provider**](./02-github-provider) | `02-github-provider` |
+| [**03. Iam User**](./03-iam-user) | `03-iam-user` |
+| [**04. Provider Versioning**](./04-provider-versioning) | `04-provider-versioning` |
+| [**05. Firewall Provision**](./05-firewall-provision) | `05-firewall-provision` |
+| [**06. Elastic Ip Creation**](./06-elastic-ip-creation) | `06-elastic-ip-creation` |
+| [**07. Attribute Creation**](./07-attribute-creation) | `07-attribute-creation` |
+| [**08. Cross Reference Attributes**](./08-cross-reference-attributes) | `08-cross-reference-attributes` |
+| [**09. Outputs**](./09-outputs) | `09-outputs` |
+| [**10. Variables**](./10-variables) | `10-variables` |
+<!-- LAB_INDEX_END -->
 ---
 
 ## 🛠️ Architecture & Concepts Demonstrated
