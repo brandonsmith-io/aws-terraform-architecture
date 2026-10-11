@@ -16,6 +16,8 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**06. Elastic IP Creation**](./06-elastic-ip-creation)                 | VPC-scoped static IPs & configuration drift remediation          |
 | [**07. Attribute Referencing & Data Sources**](./07-attribute-creation) | Implicit dependencies, dynamic AMI lookups, & attribute tracking |
 | [**08. Cross Reference Attributes**](./08-cross-reference-attributes)   | Dynamic security group rule bindings & dependency mapping        |
+| [**09. Outputs**](./09-outputs) | Resource attribute exposure, scalar parsing, & sensitive value handling |
+| [**10. Input Variables**](./10-variables) | Parameterization, type constraints, default values, & validation |
 
 ---
 
@@ -65,3 +67,12 @@ Demonstrates provisioning AWS Security Groups and attaching discrete ingress/egr
 * Demonstrated dynamic resource linking by passing an Elastic IP attribute (`public_ip`) directly into a Security Group ingress rule.
 * Utilized HCL string interpolation (`"${aws_eip.lb.public_ip}/32"`) to dynamically construct valid CIDR blocks at runtime, preventing the need to hardcode network addresses.
 * Reinforced the Terraform dependency graph by mapping implicit dependencies; the security group rule automatically waits for the EIP allocation to complete before provisioning.
+
+### [09. Outputs](./09-outputs)
+* Isolated Terraform resource outputs to expose runtime state metadata.
+* Extracted scalar IP attributes (`aws_eip.lb.public_ip`) rather than entire raw resource blocks.
+
+### [10. Input Variables](./10-variables)
+* Declared reusable input variables with explicit types (`string`, `number`) and defaults.
+* Parameterized security group ingress port mappings for dynamic configuration.
+* Automated input schema documentation via `terraform-docs`.
