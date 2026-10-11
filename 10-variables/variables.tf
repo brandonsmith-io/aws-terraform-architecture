@@ -5,12 +5,15 @@ variable "vpn_ip" {
 
 variable "app_port" {
   default = "8080"
+  description = "Target application listening port"
 }
 
 variable "ssh_port" {
   default = "22"
+  description = "Secure Shell ingress port for management"
 }
 
 variable "ftp_port" {
   default = "21"
+  description = "File Transfer Protocol listening port"
 }
