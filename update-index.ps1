@@ -27,7 +27,7 @@ foreach ($Folder in $Folders) {
 
     # Check if this folder already has a ### [..](./folder-name) block in README.md
     $EscapedFolder = [regex]::Escape($Folder.Name)
-    $ExistingBlockPattern = "(?ms)^### \[[^\]]+\]\(\./$EscapedFolder\)\r?\n(.*?)(?=(\r?\n### \[|\r?\n<!-- LAB_NOTES_END -->|\z))"
+    $ExistingBlockPattern = "(?ms)^### \[[^\]]+\]\(\./$EscapedFolder\)\r?\n(.*?)(?=(\r?\n### \[|\r?\n<!-- LAB_NOTES_END -->))"
 
     if ($OriginalContent -match $ExistingBlockPattern) {
         # Preserve your existing header and bullets for this folder

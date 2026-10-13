@@ -78,9 +78,6 @@ Demonstrates provisioning AWS Security Groups and attaching discrete ingress/egr
 * Parameterized security group ingress port mappings for dynamic configuration.
 * Automated input schema documentation via `terraform-docs`.
 
-### [11. Conditional Expressions](./11-conditional-expression)
-* **Ternary Conditional Expressions**: Implemented ternary logic (`condition ? true_val : false_val`) to dynamically toggle instance sizing between `t2.micro` and `m5.large`.
-* **Multi-Variable Evaluation**: Chained boolean expressions combining `var.environment == "production"` and `var.region == "us-east-1"` to enforce regional sizing constraints.
-* **Declarative Control Flow**: Handled environment branching natively within resource configuration without requiring duplicate resource declarations or external wrapper scripts.
-  <!-- LAB_NOTES_END -->
+### [11. Conditional Expression](./11-conditional-expression)
+* Automated lab module configuration.
 <!-- LAB_NOTES_END -->
