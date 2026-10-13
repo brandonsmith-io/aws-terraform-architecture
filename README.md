@@ -23,7 +23,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 ---
 
 ## 🛠️ Architecture & Concepts Demonstrated
-
+<!-- LAB_NOTES_START -->
 ### [01. EC2 Provisioning](./01-ec2-provisioning)
 * Configured basic AWS provider authentication.
 * Defined and provisioned AWS EC2 compute instances using HCL.
@@ -82,3 +82,5 @@ Demonstrates provisioning AWS Security Groups and attaching discrete ingress/egr
 * **Ternary Conditional Expressions**: Implemented ternary logic (`condition ? true_val : false_val`) to dynamically toggle instance sizing between `t2.micro` and `m5.large`.
 * **Multi-Variable Evaluation**: Chained boolean expressions combining `var.environment == "production"` and `var.region == "us-east-1"` to enforce regional sizing constraints.
 * **Declarative Control Flow**: Handled environment branching natively within resource configuration without requiring duplicate resource declarations or external wrapper scripts.
+  <!-- LAB_NOTES_END -->
+<!-- LAB_NOTES_END -->
