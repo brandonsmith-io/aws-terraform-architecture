@@ -18,6 +18,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**08. Cross Reference Attributes**](./08-cross-reference-attributes) | `08-cross-reference-attributes` |
 | [**09. Outputs**](./09-outputs) | `09-outputs` |
 | [**10. Variables**](./10-variables) | `10-variables` |
+| [**11. Conditional Expression**](./11-conditional-expression) | `11-conditional-expression` |
 <!-- LAB_INDEX_END -->
 ---
 
