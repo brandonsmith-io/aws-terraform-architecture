@@ -19,6 +19,8 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**09. Outputs**](./09-outputs) | `09-outputs` |
 | [**10. Variables**](./10-variables) | `10-variables` |
 | [**11. Conditional Expression**](./11-conditional-expression) | `11-conditional-expression` |
+| [**12. Data Source**](./12-data-source) | `12-data-source` |
+| [**13. Graphs**](./13-graphs) | `13-graphs` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -79,5 +81,11 @@ Demonstrates provisioning AWS Security Groups and attaching discrete ingress/egr
 * Automated input schema documentation via `terraform-docs`.
 
 ### [11. Conditional Expression](./11-conditional-expression)
+* Automated lab module configuration.
+
+### [12. Data Source](./12-data-source)
+* Automated lab module configuration.
+
+### [13. Graphs](./13-graphs)
 * Automated lab module configuration.
 <!-- LAB_NOTES_END -->
