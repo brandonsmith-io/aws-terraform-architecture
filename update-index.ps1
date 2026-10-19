@@ -40,30 +40,36 @@ foreach ($Folder in $Folders) {
         $GeneratedBullets = "* Automated lab module configuration."
 
         # If GEMINI_API_KEY is present, read the .tf code and write detailed bullets automatically
-        if ($env:GEMINI_API_KEY) {
-            $TfFiles = Get-ChildItem -Path $Folder.FullName -Filter "*.tf"
-            if ($TfFiles) {
-               $TfCode = ($TfFiles | ForEach-Object { Get-Content $_.FullName -Raw }) -join "`n"
+       # Check if the local Ollama API is listening on the default port (11434)
+if (Test-NetConnection -ComputerName "127.0.0.1" -Port 11434 -InformationLevel Quiet) {
+    $TfFiles = Get-ChildItem -Path $Folder.FullName -Filter "*.tf"
+    if ($TfFiles) {$TfCode = ($TfFiles | ForEach-Object { Get-Content $_.FullName -Raw }) -join "`n"
         
-                $Prompt = "Read this Terraform HCL code from folder '$($Folder.Name)' and write exactly 3 concise, technical Markdown bullet points (* ) explaining the architecture:`n`n$TfCode"
+        $Prompt = "You are a Senior DevOps Engineer documenting infrastructure-as-code. Read the Terraform HCL from folder '$($Folder.Name)' Write exactly 3 terse, highly technical Markdown bullet points (* ) explaining the architecture and resource dependencies. DO NOT output conversational filler, introductory sentences, or define basic terms. Output ONLY the 3 bullet points.:`n`n$TfCode"
 
-                $Body = @{
-            contents = @(@{ parts = @(@{ text = $Prompt }) })
+        # The JSON payload structure required by Ollama's local API
+        $Body = @{
+            model  = "llama3.2"
+            prompt = $Prompt
+            stream = $false
         } | ConvertTo-Json -Depth 5
 
-                try {
-                    $Uri = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=$env:GEMINI_API_KEY"
-                    $Response = Invoke-RestMethod -Uri $Uri -Method Post -ContentType "application/json" -Body $Body
-                    $GeneratedBullets =$Response.candidates[0].content.parts[0].text.Trim()
-                    Write-Host "AI generated architecture notes for $($Folder.Name)" -ForegroundColor Cyan
-                }
-                catch {
-                    Write-Warning "API call failed for $($Folder.Name). Using placeholder note."
-                    # The $_ variable in PowerShell holds the current error object
-                    Write-Host "Error Details: $($_.Exception.Message)" -ForegroundColor Red
-                }
-            }
+        try {
+            # Pointing the script to your local machine (localhost)
+            $Uri = "http://localhost:11434/api/generate"
+            $Response = Invoke-RestMethod -Uri $Uri -Method Post -ContentType "application/json" -Body $Body
+            
+            # Ollama returns the generated text inside a 'response' property
+            $GeneratedBullets =$Response.response.Trim()
+            Write-Host "Local AI generated architecture notes for $($Folder.Name)" -ForegroundColor Cyan
         }
+        catch {
+            Write-Warning "Local API call failed for $($Folder.Name). Using placeholder note."
+            Write-Host "Error Details: $($_.Exception.Message)" -ForegroundColor Red
+        }
+    }
+}
+
         $NotesBlocks += "$NewHeader`r`n$GeneratedBullets"
     }
 }

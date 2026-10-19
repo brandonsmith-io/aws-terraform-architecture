@@ -81,11 +81,17 @@ Demonstrates provisioning AWS Security Groups and attaching discrete ingress/egr
 * Automated input schema documentation via `terraform-docs`.
 
 ### [11. Conditional Expression](./11-conditional-expression)
-* Automated lab module configuration.
+* The resource `aws_instance` depends on two conditional expressions: `var.enviroment == "production"` and `var.region == "us-east-1"`.
+* The instance type is determined by a ternary operator that evaluates to `t2.micro` if both conditions are true, and `m5.large` otherwise.
+* The resource's `instance_type` attribute is dependent on the values of `var.enviroment` and `var.region`, which are defined using default values.
 
 ### [12. Data Source](./12-data-source)
-* Automated lab module configuration.
+* The Terraform configuration uses the AWS provider to interact with AWS resources.
+* The `data "aws_instance" "example"` data source depends on the AWS provider's functionality to retrieve instance metadata.
+* The `data "aws_instance" "example"` data source does not explicitly define resource creation, instead relying on the AWS provider to manage instance lifecycle.
 
 ### [13. Graphs](./13-graphs)
-* Automated lab module configuration.
+* The `terraform_data` resources utilize a `count` attribute to create 3 instances, each with a unique `id` and `name` attribute, populated from the `server_names` local variable.
+* The `terraform_data` "database" resource does not depend on any other resources and instead uses a string input, while the `servers` resource is dependent on the `terraform_data` resources.
+* The `zipmap` function creates a key-value map by merging the `server_names` and `server_roles` local variables, establishing a dependency between the two resources.
 <!-- LAB_NOTES_END -->
