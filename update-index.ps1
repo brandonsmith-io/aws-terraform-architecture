@@ -43,21 +43,24 @@ foreach ($Folder in $Folders) {
         if ($env:GEMINI_API_KEY) {
             $TfFiles = Get-ChildItem -Path $Folder.FullName -Filter "*.tf"
             if ($TfFiles) {
-                $TfCode = ($TfFiles | ForEach-Object { Get-Content $_.FullName -Raw }) -join "`n"
-                $Prompt = "Read this Terraform HCL code from folder '$($Folder.Name)' and write exactly 3 concise, technical Markdown bullet points (* ) explaining the architecture, HCL concepts, and security/state practices demonstrated. Match an engineering portfolio tone. Do not include a header or intro text, only the 3 bullet points:`n`n$TfCode"
+               $TfCode = ($TfFiles | ForEach-Object { Get-Content $_.FullName -Raw }) -join "`n"
+        
+                $Prompt = "Read this Terraform HCL code from folder '$($Folder.Name)' and write exactly 3 concise, technical Markdown bullet points (* ) explaining the architecture:`n`n$TfCode"
 
                 $Body = @{
-                    contents = @(@{ parts = @(@{ text = $Prompt }) })
-                } | ConvertTo-Json -Depth 5
+            contents = @(@{ parts = @(@{ text = $Prompt }) })
+        } | ConvertTo-Json -Depth 5
 
                 try {
-                    $Uri = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$($env:GEMINI_API_KEY)"
+                    $Uri = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=$env:GEMINI_API_KEY"
                     $Response = Invoke-RestMethod -Uri $Uri -Method Post -ContentType "application/json" -Body $Body
                     $GeneratedBullets =$Response.candidates[0].content.parts[0].text.Trim()
                     Write-Host "AI generated architecture notes for $($Folder.Name)" -ForegroundColor Cyan
                 }
                 catch {
                     Write-Warning "API call failed for $($Folder.Name). Using placeholder note."
+                    # The $_ variable in PowerShell holds the current error object
+                    Write-Host "Error Details: $($_.Exception.Message)" -ForegroundColor Red
                 }
             }
         }
