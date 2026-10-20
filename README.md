@@ -22,7 +22,8 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**12. Data Source**](./12-data-source) | `12-data-source` |
 | [**13. Graphs**](./13-graphs) | `13-graphs` |
 | [**14. Lifecycle Meta Argument**](./14-lifecycle-meta-argument) | `14-lifecycle-meta-argument` |
-| [**15. Depends On Meta Argument**](./15-depends-on-meta-argument) | `15-depends-on-meta-argument` |
+| [**15. Dependecies Explicit**](./15-dependecies-explicit) | `15-dependecies-explicit` |
+| [**16. Dependecies Implicit**](./16-dependecies-implicit) | `16-dependecies-implicit` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -102,8 +103,13 @@ Demonstrates provisioning AWS Security Groups and attaching discrete ingress/egr
 * The `lifecycle` block on the `aws_instance` resource is dependent on the `ignore_changes` argument set to `all`, indicating that the provider will attempt to update the resource regardless of changes to any of its attributes.
 * The `aws_instance` resource is provisioned within the `aws` provider, which is configured to target the `us-east-1` region.
 
-### [15. Depends On Meta Argument](./15-depends-on-meta-argument)
-* The resource "aws_instance" depends on the resource "aws_s3_bucket" "mybucket", establishing a causal relationship between the creation of the EC2 instance and the creation of the S3 bucket.
-* The data "aws_ami" "amazon_linux" is used to retrieve the latest Amazon Linux AMI, with its creation and availability dependent on the retrieval process.
-* The filter conditions on the data "aws_ami" resource narrow down the search to AMIs with a specific name, root device type, and virtualization type, which are also constraints on the availability of the AMI.
+### [15. Dependecies Explicit](./15-dependecies-explicit)
+* The `aws_instance` resource depends on the `aws_s3_bucket` resource, which is not defined in this code snippet, indicating a potential circular dependency.
+* The `aws_instance` resource relies on the `data.aws_ami.amazon_linux` data source, which uses filters to retrieve a specific Amazon Linux AMI, ensuring consistency across environments.
+* The `aws_s3_bucket` resource is not dependent on any other resources, indicating a dependency on external infrastructure or services, such as IAM roles or bucket policies, not shown in this code snippet.
+
+### [16. Dependecies Implicit](./16-dependecies-implicit)
+* The Terraform configuration uses the AWS provider to interact with AWS resources, with the `region` set to `us-east-1`.
+* The `aws_instance` resource depends on the `aws_security_group` resource, which is referenced by the `vpc_security_group_ids` attribute, establishing a dependency chain.
+* The `data.aws_ami.amazon_linux` resource is used to retrieve an Amazon Linux AMI, and its `id` is used as the `ami` attribute for the `aws_instance` resource, establishing a data-dependent dependency.
 <!-- LAB_NOTES_END -->
