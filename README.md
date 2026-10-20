@@ -22,7 +22,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**12. Data Source**](./12-data-source) | `12-data-source` |
 | [**13. Graphs**](./13-graphs) | `13-graphs` |
 | [**14. Lifecycle Meta Argument**](./14-lifecycle-meta-argument) | `14-lifecycle-meta-argument` |
-| [**15. Dependecies Explicit**](./15-dependecies-explicit) | `15-dependecies-explicit` |
+| [**15. Dependencies Explicit**](./15-dependencies-explicit) | `15-dependencies-explicit` |
 | [**16. Dependecies Implicit**](./16-dependecies-implicit) | `16-dependecies-implicit` |
 <!-- LAB_INDEX_END -->
 ---
@@ -103,10 +103,10 @@ Demonstrates provisioning AWS Security Groups and attaching discrete ingress/egr
 * The `lifecycle` block on the `aws_instance` resource is dependent on the `ignore_changes` argument set to `all`, indicating that the provider will attempt to update the resource regardless of changes to any of its attributes.
 * The `aws_instance` resource is provisioned within the `aws` provider, which is configured to target the `us-east-1` region.
 
-### [15. Dependecies Explicit](./15-dependecies-explicit)
-* The `aws_instance` resource depends on the `aws_s3_bucket` resource, which is not defined in this code snippet, indicating a potential circular dependency.
-* The `aws_instance` resource relies on the `data.aws_ami.amazon_linux` data source, which uses filters to retrieve a specific Amazon Linux AMI, ensuring consistency across environments.
-* The `aws_s3_bucket` resource is not dependent on any other resources, indicating a dependency on external infrastructure or services, such as IAM roles or bucket policies, not shown in this code snippet.
+### [15. Dependencies Explicit](./15-dependencies-explicit)
+* The `aws_instance` resource depends on the `aws_s3_bucket` resource, establishing a causal relationship between the EC2 instance and its S3 bucket.
+* The `aws_s3_bucket` resource is not created concurrently with the `aws_instance` resource, implying a dependency chain where the bucket must exist before the instance is launched.
+* The `aws_instance` resource's `instance_type` is specified without any explicit dependencies, suggesting that Terraform will wait for the bucket's creation before spinning up the instance.
 
 ### [16. Dependecies Implicit](./16-dependecies-implicit)
 * The Terraform configuration uses the AWS provider to interact with AWS resources, with the `region` set to `us-east-1`.
