@@ -21,6 +21,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**11. Conditional Expression**](./11-conditional-expression) | `11-conditional-expression` |
 | [**12. Data Source**](./12-data-source) | `12-data-source` |
 | [**13. Graphs**](./13-graphs) | `13-graphs` |
+| [**14. Lifecycle Meta Argument**](./14-lifecycle-meta-argument) | `14-lifecycle-meta-argument` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -94,4 +95,9 @@ Demonstrates provisioning AWS Security Groups and attaching discrete ingress/egr
 * The `terraform_data` resources utilize a `count` attribute to create 3 instances, each with a unique `id` and `name` attribute, populated from the `server_names` local variable.
 * The `terraform_data` "database" resource does not depend on any other resources and instead uses a string input, while the `servers` resource is dependent on the `terraform_data` resources.
 * The `zipmap` function creates a key-value map by merging the `server_names` and `server_roles` local variables, establishing a dependency between the two resources.
+
+### [14. Lifecycle Meta Argument](./14-lifecycle-meta-argument)
+* The resource `aws_instance` depends on the `data.aws_ami.amazon_linux` data source for its `ami` attribute, establishing a dependency between the two.
+* The `lifecycle` block on the `aws_instance` resource is dependent on the `ignore_changes` argument set to `all`, indicating that the provider will attempt to update the resource regardless of changes to any of its attributes.
+* The `aws_instance` resource is provisioned within the `aws` provider, which is configured to target the `us-east-1` region.
 <!-- LAB_NOTES_END -->
