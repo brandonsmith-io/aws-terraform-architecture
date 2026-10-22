@@ -24,6 +24,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**14. Lifecycle Meta Argument**](./14-lifecycle-meta-argument) | `14-lifecycle-meta-argument` |
 | [**15. Dependencies Explicit**](./15-dependencies-explicit) | `15-dependencies-explicit` |
 | [**16. Dependecies Implicit**](./16-dependecies-implicit) | `16-dependecies-implicit` |
+| [**17. Check Block**](./17-check-block) | `17-check-block` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -112,4 +113,9 @@ Demonstrates provisioning AWS Security Groups and attaching discrete ingress/egr
 * The Terraform configuration uses the AWS provider to interact with AWS resources, with the `region` set to `us-east-1`.
 * The `aws_instance` resource depends on the `aws_security_group` resource, which is referenced by the `vpc_security_group_ids` attribute, establishing a dependency chain.
 * The `data.aws_ami.amazon_linux` resource is used to retrieve an Amazon Linux AMI, and its `id` is used as the `ami` attribute for the `aws_instance` resource, establishing a data-dependent dependency.
+
+### [17. Check Block](./17-check-block)
+* The `check "website_check"` block utilizes a `data.http` resource to fetch the status code of a specified URL, demonstrating the integration of external HTTP requests within a Terraform configuration.
+* The `resource "local_file" "foo"` block utilizes the `path.module` attribute to generate a relative path to a file, illustrating the Terraform module's ability to dynamically construct file system resource references.
+* The `assert` block, part of the `check "website_check"` block, employs a conditional assertion to validate the status code returned by the `data.http` resource, serving as a basic example of input validation and error handling within Terraform scripts.
 <!-- LAB_NOTES_END -->
