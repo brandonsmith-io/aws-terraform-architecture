@@ -25,6 +25,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**15. Dependencies Explicit**](./15-dependencies-explicit) | `15-dependencies-explicit` |
 | [**16. Dependecies Implicit**](./16-dependecies-implicit) | `16-dependecies-implicit` |
 | [**17. Check Block**](./17-check-block) | `17-check-block` |
+| [**18. Moved Blocks**](./18-moved-blocks) | `18-moved-blocks` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -118,4 +119,9 @@ Demonstrates provisioning AWS Security Groups and attaching discrete ingress/egr
 * The `check "website_check"` block utilizes a `data.http` resource to fetch the status code of a specified URL, demonstrating the integration of external HTTP requests within a Terraform configuration.
 * The `resource "local_file" "foo"` block utilizes the `path.module` attribute to generate a relative path to a file, illustrating the Terraform module's ability to dynamically construct file system resource references.
 * The `assert` block, part of the `check "website_check"` block, employs a conditional assertion to validate the status code returned by the `data.http` resource, serving as a basic example of input validation and error handling within Terraform scripts.
+
+### [18. Moved Blocks](./18-moved-blocks)
+* The Terraform HCL references an `aws_security_group` resource named `payment_database_firewall`, which is associated with the `db_firewall` name.
+* A resource rename operation is applied to the existing `aws_security_group` resource named `database_firewall`, renaming it to `payment_database_firewall`, effectively updating its name.
+* The resource `payment_database_firewall` inherits the dependencies of its predecessor `database_firewall`, maintaining continuity in the Terraform configuration.
 <!-- LAB_NOTES_END -->
