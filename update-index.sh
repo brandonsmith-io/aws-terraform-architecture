@@ -2,12 +2,15 @@
 
 # Explicitly define the target file
 README_FILE="README.md"
+INDEX_PAYLOAD=".index_payload.tmp"
+NOTES_PAYLOAD=".notes_payload.tmp"
 
-# 1. Discover all numbered lab folders
+# 1. Initialize payload files using echo -e for native macOS newline expansion
+echo -e "| Lab Module | Directory Path |\n| :--- | :--- |" > "$INDEX_PAYLOAD"
+> "$NOTES_PAYLOAD" # Initialize an empty notes file
+
+# Discover all numbered lab folders
 folders=($(find . -maxdepth 1 -type d -name "[0-9][0-9]-*" | sort))
-
-table_content="| Lab Module | Directory Path |\n| :--- | :--- |"
-notes_content=""
 
 for folder_path in "${folders[@]}"; do
     folder_name=$(basename "$folder_path")
@@ -18,18 +21,20 @@ for folder_path in "${folders[@]}"; do
     title="$prefix. $(echo "$clean_suffix" | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2))}1')"
     relative_link="./$folder_name"
     
-    table_content="$table_content\n| [**$title**]($relative_link) | \`$folder_name\` |"
+    # Write directly to the index payload file
+    echo -e "| [**$title**]($relative_link) | \`$folder_name\` |" >> "$INDEX_PAYLOAD"
     
     header="### [$title]($relative_link)"
     
     if grep -Fq "$header" "$README_FILE"; then
-        existing_block=$(awk -v start="$header" '
+        # Extract existing notes and append them directly to the notes payload
+        awk -v start="$header" '
             $0 == start {found=1; print; next}
             found && /^### \[/ {exit}
             found && /<!-- LAB_NOTES_END -->/ {exit}
             found {print}
-        ' "$README_FILE")
-        notes_content="$notes_content$existing_block\n\n"
+        ' "$README_FILE" >> "$NOTES_PAYLOAD"
+        echo "" >> "$NOTES_PAYLOAD"
     else
         generated_bullets="* Automated lab module configuration."
         
@@ -53,18 +58,16 @@ for folder_path in "${folders[@]}"; do
             fi
         fi
         
-        notes_content="$notes_content$header\n$generated_bullets\n\n"
+        # Write new AI generation directly to the payload file
+        echo -e "$header\n$generated_bullets\n" >> "$NOTES_PAYLOAD"
     fi
 done
 
-# 3. Inject the updated Table and Notes back into the README
-export NEW_INDEX="$table_content"
-export NEW_NOTES="$notes_content"
-
-awk '
+# 3. Inject the payload files into the README using system("cat")
+awk -v payload="$INDEX_PAYLOAD" '
     /<!-- LAB_INDEX_START -->/ {
         print
-        printf "%b\n", ENVIRON["NEW_INDEX"]
+        system("cat " payload)
         skip=1
         next
     }
@@ -74,10 +77,10 @@ awk '
     !skip {print}
 ' "$README_FILE" > "$README_FILE.tmp" && mv "$README_FILE.tmp" "$README_FILE"
 
-awk '
+awk -v payload="$NOTES_PAYLOAD" '
     /<!-- LAB_NOTES_START -->/ {
         print
-        printf "%b\n", ENVIRON["NEW_NOTES"]
+        system("cat " payload)
         skip=1
         next
     }
@@ -86,5 +89,8 @@ awk '
     }
     !skip {print}
 ' "$README_FILE" > "$README_FILE.tmp" && mv "$README_FILE.tmp" "$README_FILE"
+
+# Clean up hidden artifacts
+rm -f "$INDEX_PAYLOAD" "$NOTES_PAYLOAD"
 
 echo -e "\e[32mSuccess: README index and notes synced with ${#folders[@]} lab modules.\e[0m"
