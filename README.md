@@ -6,7 +6,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 ## 📂 Lab Index & Navigation
 <!-- LAB_INDEX_START -->
-| Lab Module | Directory Path |
+%b| Lab Module | Directory Path |
 | :--- | :--- |
 | [**01. Ec2 Provisioning**](./01-ec2-provisioning) | `01-ec2-provisioning` |
 | [**02. Github Provider**](./02-github-provider) | `02-github-provider` |
@@ -26,6 +26,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**16. Dependecies Implicit**](./16-dependecies-implicit) | `16-dependecies-implicit` |
 | [**17. Check Block**](./17-check-block) | `17-check-block` |
 | [**18. Moved Blocks**](./18-moved-blocks) | `18-moved-blocks` |
+| [**19. Vpc Module Test**](./19-vpc-module-test) | `19-vpc-module-test` |
 <!-- LAB_INDEX_END -->
 ---
 
