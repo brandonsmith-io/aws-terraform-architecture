@@ -41,10 +41,12 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
 ### [02. Github Provider](./02-github-provider)
 * The Terraform configuration utilizes the `github` provider version 6.0 or higher, specified using the `~> 6.0` syntax, which enables version locking and dependency management.
 * The `github_repository` resource creation depends on the `github` provider, establishing a direct resource dependency between the provider configuration and the resource definition.
 * The `github_repository` resource specifies a publicly accessible repository named `example` with a description of "My awesome codebase", relying on the provider's capabilities to interact with the GitHub repository.
+
 
 
 
@@ -59,10 +61,12 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
 ### [04. Provider Versioning](./04-provider-versioning)
 * *aws provider is configured with region "us-east-1", specifying the location for resource creation* 
 * The aws provider is versioned to ~> 5.0, utilizing Terraform's version pinning to enforce minimum compatibility* 
 * The required_providers block ensures the aws provider is imported before other resources are created, establishing a dependency chain*
+
 
 
 
@@ -77,10 +81,12 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
 ### [06. Elastic Ip Creation](./06-elastic-ip-creation)
 * The Terraform configuration utilizes the AWS provider with a region set to "us-east-1".
 * The aws_eip resource is created with an Elastic IP address assigned to a domain of "vpc".
 * The creation of the aws_eip resource implicitly depends on the availability of the AWS provider and the region, as well as the existence of a VPC domain.
+
 
 
 
@@ -95,10 +101,12 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
 ### [08. Cross Reference Attributes](./08-cross-reference-attributes)
 * The `aws_vpc_security_group_ingress_rule` resource depends on the `aws_security_group` resource, establishing a bidirectional relationship between the EIP and the security group.
 * The `aws_vpc_security_group_ingress_rule` resource references the `public_ip` attribute of the `aws_eip` resource, which is used to define the ingress rule's source IP address.
 * The ingress rule's `from_port`, `ip_protocol`, and `to_port` attributes are defined based on the `security_group_id` of the referenced `aws_security_group` resource, establishing a dependency between the security group and the ingress rule.
+
 
 
 
@@ -113,10 +121,12 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
 ### [10. Variables](./10-variables)
 * The AWS Security Group `allow_tls` is the root resource that defines the ingress rules for three separate TCP ports: `app_port`, `ssh_port`, and `ftp_port`, which are controlled by the `aws_vpc_security_group_ingress_rule` resources.
 * The `aws_vpc_security_group_ingress_rule` resources are mutually dependent on the `aws_security_group.allow_tls` resource, with the latter's ID being referenced in each rule, and the rules collectively defining the allowed traffic for the security group.
 * The variables `vpn_ip`, `app_port`, `ssh_port`, and `ftp_port` are used to parameterize the ingress rules, allowing for fine-grained control over the allowed traffic and enabling efficient management of the infrastructure via Terraform configuration changes.
+
 
 
 
@@ -131,10 +141,12 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
 ### [12. Data Source](./12-data-source)
 * The Terraform provider is configured to use AWS, specifying the region as 'us-east-1'.
 * The `data "aws_instance" "example"` resource relies on an underlying `aws_instance` resource, which is not explicitly defined in this code snippet.
 * The `aws_instance` resource is likely defined elsewhere in the Terraform configuration, potentially in a separate `main.tf` file, due to the use of the `data` block without a local resource definition.
+
 
 
 
@@ -149,10 +161,12 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
 ### [14. Lifecycle Meta Argument](./14-lifecycle-meta-argument)
 * The `aws_instance` resource is dependent on the `data.aws_ami.amazon_linux` data source, which retrieves the latest Amazon Linux AMI ID based on specified filters.
 * The `aws_instance` resource uses the `aws_instance` resource type, but with a custom lifecycle block that ignores changes to the instance during the creation lifecycle.
 * The `aws_instance` resource is not provisioned with any specific resource dependencies, relying on the AMI ID and instance type specified in the data source and instance configuration, respectively.
+
 
 
 
@@ -167,10 +181,12 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
 ### [16. Dependecies Implicit](./16-dependecies-implicit)
 * The Terraform HCL utilizes the AWS provider to interact with AWS resources, specifying a region of `us-east-1`.
 * The `aws_instance` resource depends on the `aws_security_group` resource 'prod', which is referenced in the `vpc_security_group_ids` attribute, establishing a dependency chain.
 * The `aws_instance` resource also depends on the `data.aws_ami.amazon_linux` resource, which provides the ID of the Amazon Linux AMI used by the instance, establishing a data source dependency.
+
 
 
 
@@ -185,10 +201,12 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
 ### [18. Moved Blocks](./18-moved-blocks)
 * The `aws_security_group` resource is created to apply the "db_firewall" name, which is associated with the security group's identifier (ID).
 * The "database_firewall" ID is moved to the "payment_database_firewall" ID, establishing a resource dependency where the latter's existence depends on the former.
 * The `aws_security_group` resource is tied to the state of the "payment_database_firewall" resource, with Terraform monitoring any changes to the latter and reapplying its configuration as needed.
+
 
 
 
@@ -200,24 +218,25 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 * The `aws_vpc` resource does not have any explicit dependencies on other AWS resources; however, the VPC can be nested within other AWS resource types (e.g., EC2 instance, Lambda function) using AWS resource modules.
 
 
-<!-- LAB_NOTES_END -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- LAB_NOTES_END -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
