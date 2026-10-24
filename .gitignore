@@ -14,4 +14,4 @@ tfplan
 
 # Sensitive variable files
 *.tfvars
-*.tfvars.json
+*.tfvars.json.tmp
