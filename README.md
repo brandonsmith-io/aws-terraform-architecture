@@ -26,7 +26,6 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**16. Dependecies Implicit**](./16-dependecies-implicit) | `16-dependecies-implicit` |
 | [**17. Check Block**](./17-check-block) | `17-check-block` |
 | [**18. Moved Blocks**](./18-moved-blocks) | `18-moved-blocks` |
-| [**19. Vpc Module Test**](./19-vpc-module-test) | `19-vpc-module-test` |
 <!-- LAB_INDEX_END -->
 ---
 
