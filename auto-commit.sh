@@ -34,8 +34,7 @@ if [ -z "$response" ]; then
 fi
 
 # Extract the response text and trim whitespace
-generated_commit=$(echo "$response" | jq -r '.response' | xargs)
-
+generated_commit=$(echo "$response" | jq -r '.response' | tr -d '\r\n' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
 echo -e "\n\e[33mProposed Commit Message:\e[0m"
 echo "$generated_commit"
 
