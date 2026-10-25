@@ -15,3 +15,13 @@ tfplan
 # Sensitive variable files
 *.tfvars
 *.tfvars.json.tmp
+
+# Private keys and credentials
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+
+# macOS metadata
+.DS_Store
+**/.DS_Store

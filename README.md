@@ -27,6 +27,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**17. Check Block**](./17-check-block) | `17-check-block` |
 | [**18. Moved Blocks**](./18-moved-blocks) | `18-moved-blocks` |
 | [**19. Local Exec Provisioner**](./19-local-exec-provisioner) | `19-local-exec-provisioner` |
+| [**20. Remote Exec Provisioner**](./20-remote-exec-provisioner) | `20-remote-exec-provisioner` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -126,6 +127,9 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 * The `aws_instance` resource depends on the `data.aws_ami.amazon_linux` resource for the AMI ID, and the `aws_instance` resource's `instance_type` attribute is dependent on the `aws_instance` resource itself, forming a circular dependency. This is not directly supported by Terraform.
 * The `local-exec` provisioner executes a command on the local machine, using `self` to access the instance's attributes, such as `private_ip`.
 * The `aws_instance` resource is dependent on the availability of an EC2 instance with the specified AMI, instance type, and virtualization type, which is determined by the `data.aws_ami.amazon_linux` resource.
+
+### [20. Remote Exec Provisioner](./20-remote-exec-provisioner)
+* The `aws_instance` resource depends on `aws_vpc_security_group_ingress_rule.allow_tls_ipv4` to enable outbound traffic to the instance via SSH. * The `aws_instance` resource depends on `aws_vpc_security_group_egress_rule.allow_all_traffic_ipv4` to enable inbound traffic from the internet. * The `aws_instance` resource depends on `aws_default_vpc.default` to assign the instance to a default VPC with a security group that controls inbound and outbound traffic.
 
 <!-- LAB_NOTES_END -->
 
