@@ -34,7 +34,6 @@ for folder_path in "${folders[@]}"; do
             found && /<!-- LAB_NOTES_END -->/ {exit}
             found {print}
         ' "$README_FILE" >> "$NOTES_PAYLOAD"
-        echo "" >> "$NOTES_PAYLOAD"
     else
         generated_bullets="* Automated lab module configuration."
         
@@ -92,5 +91,7 @@ awk -v payload="$NOTES_PAYLOAD" '
 
 # Clean up hidden artifacts
 rm -f "$INDEX_PAYLOAD" "$NOTES_PAYLOAD"
+
+cat -s "$README_FILE" > "$README_FILE.tmp" && mv "$README_FILE.tmp" "$README_FILE"
 
 echo -e "\e[32mSuccess: README index and notes synced with ${#folders[@]} lab modules.\e[0m"
