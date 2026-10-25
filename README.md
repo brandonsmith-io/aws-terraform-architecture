@@ -26,6 +26,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**16. Dependecies Implicit**](./16-dependecies-implicit) | `16-dependecies-implicit` |
 | [**17. Check Block**](./17-check-block) | `17-check-block` |
 | [**18. Moved Blocks**](./18-moved-blocks) | `18-moved-blocks` |
+| [**19. Local Exec Provisioner**](./19-local-exec-provisioner) | `19-local-exec-provisioner` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -35,6 +36,8 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 * The Terraform configuration establishes a connection with AWS through the `aws` provider, targeting the `us-east-1` region.
 * An `aws_instance` resource is created, referencing an `ami` (Amazon Machine Image) ID (`ami-0b245cc5f82576748`) and specifying an instance type (`t2.micro`) for the EC2 instance.
 * The `aws_instance` resource depends on the `aws` provider, which enables the creation and management of the underlying AWS infrastructure.
+
+
 
 
 
@@ -59,10 +62,14 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
+
 ### [03. Iam User](./03-iam-user)
 * The `aws_iam_user` resource creates an IAM user named "kplabs-demo-user" in the specified region (`us-east-1`). The resource is provisioned through the AWS provider, which is configured to use the specified region.
 * The `aws_iam_user` resource has no dependencies on other AWS resources, as it only creates a new IAM user with the specified name.
 * The `aws_iam_user` resource is a child resource of the `provider "aws"`, which defines the AWS configuration, including the region, that is applied to all AWS resources created in the configuration.
+
+
 
 
 
@@ -87,10 +94,14 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
+
 ### [05. Firewall Provision](./05-firewall-provision)
 * The AWS provider is configured to operate within the `us-east-1` region, specifying the target AWS account and geographical location for infrastructure provisioning.
 * The `aws_security_group` resource `allow_tls` is dependent on the `aws_vpc_security_group_egress_rule` resource `allow_all_traffic_ipv4`, establishing a security group that allows outbound traffic on all protocols and ports.
 * The `aws_vpc_security_group_ingress_rule` resource `allow_tls_ipv4` is dependent on the `data.aws_security_group` resource `default`, referencing the default security group to configure inbound traffic on the `allow_tls` security group.
+
+
 
 
 
@@ -115,10 +126,14 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
+
 ### [07. Attribute Creation](./07-attribute-creation)
 * The `aws_eip` resource depends on the `aws_instance.web_server` resource, establishing a relationship between the Elastic IP and the associated EC2 instance.
 * The `aws_instance.web_server` resource depends on the `data.aws_ami.latest_amazon_linux` resource, which provides the ID of the latest Amazon Linux AMI available in the specified region.
 * The `data.aws_ami.latest_amazon_linux` resource is configured to fetch the latest AMI by default, with a specific filter for Amazon-provided AMIs that match the specified virtualization type (HVM).
+
+
 
 
 
@@ -143,10 +158,14 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
+
 ### [09. Outputs](./09-outputs)
 * The Terraform configuration establishes an AWS provider for region "us-east-1" to manage EC2 resources.
 * The `aws_eip` resource is created to assign a public IP address to the "lb" instance, which is associated with the "vpc" domain.
 * The `output` block exposes the `public_ip` attribute of the `aws_eip` resource as a machine-readable value.
+
+
 
 
 
@@ -171,10 +190,14 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
+
 ### [11. Conditional Expression](./11-conditional-expression)
 * The `aws_instance` resource utilizes a conditional expression to determine the instance type based on the values of `var.enviroment` and `var.region`. The conditional expression uses logical AND (`&&`) to evaluate the conditions.
 * The `aws_instance` resource depends on the values of `var.enviroment` and `var.region`, which are defined as variables that can be overridden during infrastructure provisioning.
 * The conditional expression within the `aws_instance` resource's `instance_type` attribute uses the ternary operator (`? :`) to assign different instance types based on the evaluation of the conditions.
+
+
 
 
 
@@ -199,10 +222,14 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
+
 ### [13. Graphs](./13-graphs)
 * The Terraform `resource` block for `servers` depends on the `count` parameter, which is controlled by the `count` attribute, and is nested within the `terraform_data` resource.
 * The `database` resource is an independent, standalone resource that does not depend on any other resource, and has a static `input` attribute set to `"postgresql-v16"`.
 * The `server_role_mapping` output utilizes the `zipmap` function to merge the `server_names` and `server_roles` lists into a key-value map, where each key is a server name and the corresponding value is the server's role.
+
+
 
 
 
@@ -227,10 +254,14 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
+
 ### [15. Dependencies Explicit](./15-dependencies-explicit)
 * The Terraform configuration depends on `aws_s3_bucket.mybucket`, indicating a prerequisite for `aws_instance` resources to be created in the same AWS account.
 * The `aws_instance` resource is tied to the `aws_ami.amazon_linux` data source, which retrieves the latest Amazon Linux AMI in the specified region.
 * The `aws_s3_bucket` resource is used to create a prerequisite resource for `aws_instance`, establishing a dependency between the two Terraform resources.
+
+
 
 
 
@@ -255,10 +286,14 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
+
 ### [17. Check Block](./17-check-block)
 * The `check` block defines a dependency on the `http` data source, which fetches the status code of the provided URL.
 * The `assert` statement within the `check` block depends on the status code returned by the `http` data source, ensuring that the condition is met before the Terraform state is considered valid.
 * The `local_file` resource is not dependent on the `check` block and is instead a standalone resource, creating a file with the specified content in the current working directory.
+
+
 
 
 
@@ -281,6 +316,14 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 
 
+
+
+
+
+### [19. Local Exec Provisioner](./19-local-exec-provisioner)
+* The `aws_instance` resource depends on the `data.aws_ami.amazon_linux` resource for the AMI ID, and the `aws_instance` resource's `instance_type` attribute is dependent on the `aws_instance` resource itself, forming a circular dependency. This is not directly supported by Terraform.
+* The `local-exec` provisioner executes a command on the local machine, using `self` to access the instance's attributes, such as `private_ip`.
+* The `aws_instance` resource is dependent on the availability of an EC2 instance with the specified AMI, instance type, and virtualization type, which is determined by the `data.aws_ami.amazon_linux` resource.
 
 
 <!-- LAB_NOTES_END -->

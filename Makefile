@@ -1,6 +1,6 @@
 commit:
-	./auto-commit.sh
 	./update-index.sh
+	./auto-commit.sh
 
 plan:
 	terraform fmt
