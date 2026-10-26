@@ -28,6 +28,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**18. Moved Blocks**](./18-moved-blocks) | `18-moved-blocks` |
 | [**19. Local Exec Provisioner**](./19-local-exec-provisioner) | `19-local-exec-provisioner` |
 | [**20. Remote Exec Provisioner**](./20-remote-exec-provisioner) | `20-remote-exec-provisioner` |
+| [**21. Modules**](./21-modules) | `21-modules` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -130,6 +131,11 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 
 ### [20. Remote Exec Provisioner](./20-remote-exec-provisioner)
 * The `aws_instance` resource depends on `aws_vpc_security_group_ingress_rule.allow_tls_ipv4` to enable outbound traffic to the instance via SSH. * The `aws_instance` resource depends on `aws_vpc_security_group_egress_rule.allow_all_traffic_ipv4` to enable inbound traffic from the internet. * The `aws_instance` resource depends on `aws_default_vpc.default` to assign the instance to a default VPC with a security group that controls inbound and outbound traffic.
+
+### [21. Modules](./21-modules)
+* The `ec2-instance` module uses the `terraform-aws-modules/ec2-instance/aws` source to create an EC2 instance.
+* The module depends on the `aws_subnet` resource, which is referenced by the `subnet_id` attribute.
+* The instance is created with the specified `instance_type` (t2.micro), which is not a dependency on any other resource.
 
 <!-- LAB_NOTES_END -->
 
