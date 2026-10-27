@@ -28,7 +28,9 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**18. Moved Blocks**](./18-moved-blocks) | `18-moved-blocks` |
 | [**19. Local Exec Provisioner**](./19-local-exec-provisioner) | `19-local-exec-provisioner` |
 | [**20. Remote Exec Provisioner**](./20-remote-exec-provisioner) | `20-remote-exec-provisioner` |
-| [**21. Modules**](./21-modules) | `21-modules` |
+| [**21. Modules External**](./21-modules-external) | `21-modules-external` |
+| [**22. Modules Local A**](./22-modules-local-A) | `22-modules-local-A` |
+| [**22. Modules Local B**](./22-modules-local-B) | `22-modules-local-B` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -132,10 +134,18 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 ### [20. Remote Exec Provisioner](./20-remote-exec-provisioner)
 * The `aws_instance` resource depends on `aws_vpc_security_group_ingress_rule.allow_tls_ipv4` to enable outbound traffic to the instance via SSH. * The `aws_instance` resource depends on `aws_vpc_security_group_egress_rule.allow_all_traffic_ipv4` to enable inbound traffic from the internet. * The `aws_instance` resource depends on `aws_default_vpc.default` to assign the instance to a default VPC with a security group that controls inbound and outbound traffic.
 
-### [21. Modules](./21-modules)
-* The `ec2-instance` module uses the `terraform-aws-modules/ec2-instance/aws` source to create an EC2 instance.
-* The module depends on the `aws_subnet` resource, which is referenced by the `subnet_id` attribute.
-* The instance is created with the specified `instance_type` (t2.micro), which is not a dependency on any other resource.
+### [21. Modules External](./21-modules-external)
+* The `module "ec2-instance"` uses the `terraform-aws-modules/ec2-instance/aws` module, which is a pre-built Terraform module for creating EC2 instances in AWS.
+* The module's `version` attribute is set to `6.4.1`, specifying the version of the module to use for resource creation.
+* The `subnet_id` and `instance_type` variables are input parameters that allow the module to customize the EC2 instance creation process.
+
+### [22. Modules Local A](./22-modules-local-A)
+* Automated lab module configuration.
+
+### [22. Modules Local B](./22-modules-local-B)
+* The Terraform configuration utilizes two AWS providers (`aws.prod` and `aws.mumbai`) with separate region settings, enabling regional resource management.
+* The `module "sg"` utilizes a nested module (`../22-modules-local-A/network`) which in turn depends on the `aws` provider alias `aws.mumbai`, allowing for regional resource placement.
+* The `providers` block within the `module "sg"` ensures that resources created in the `aws.mumbai` provider alias are referenced in the `aws.prod` provider, establishing a provider alias dependency.
 
 <!-- LAB_NOTES_END -->
 
