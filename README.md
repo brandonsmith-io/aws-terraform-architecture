@@ -33,6 +33,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**22. Modules Local B**](./22-modules-local-B) | `22-modules-local-B` |
 | [**23. Import**](./23-import) | `23-import` |
 | [**24. Remove Blocks**](./24-remove-blocks) | `24-remove-blocks` |
+| [**25. Multi Provider Configuration**](./25-multi-provider-configuration) | `25-multi-provider-configuration` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -158,6 +159,11 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 * The `local_file` resource is a Terraform resource that manages a local file.
 * The `removed` resource is a Terraform resource that tracks the removal of the `local_file.foo` resource.
 * The `removed` resource is configured to ignore the lifecycle management of the `local_file.foo` resource, with `destroy = false`.
+
+### [25. Multi Provider Configuration](./25-multi-provider-configuration)
+* The Terraform configuration utilizes a multi-provider approach, where three AWS regions (ap-southeast-1, ap-south-1, and us-east-1) are provisioned with separate `aws` providers, each assigned an alias (mumbai, usa, and the root provider, respectively).
+* Resource `aws_security_group` "sg_1" and "sg_2" are defined within different providers (aws.usa and aws.mumbai, respectively), resulting in separate security groups with unique configurations for each region.
+* The `provider` attribute in each `aws_security_group` resource specifies the region in which the security group is provisioned, effectively creating a regional scope for the security groups.
 
 <!-- LAB_NOTES_END -->
 
