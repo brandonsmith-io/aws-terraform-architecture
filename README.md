@@ -31,6 +31,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**21. Modules External**](./21-modules-external) | `21-modules-external` |
 | [**22. Modules Local A**](./22-modules-local-A) | `22-modules-local-A` |
 | [**22. Modules Local B**](./22-modules-local-B) | `22-modules-local-B` |
+| [**23. Import**](./23-import) | `23-import` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -146,6 +147,11 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 * The Terraform configuration utilizes two AWS providers (`aws.prod` and `aws.mumbai`) with separate region settings, enabling regional resource management.
 * The `module "sg"` utilizes a nested module (`../22-modules-local-A/network`) which in turn depends on the `aws` provider alias `aws.mumbai`, allowing for regional resource placement.
 * The `providers` block within the `module "sg"` ensures that resources created in the `aws.mumbai` provider alias are referenced in the `aws.prod` provider, establishing a provider alias dependency.
+
+### [23. Import](./23-import)
+* The Terraform configuration creates a single AWS Security Group (`aws_security_group "mysg"`), which is tied to a specific VPC (`vpc-078eb2ce40d163e90`) and is assigned a unique ID (`sg-0f9cb1823f10bf518`). 
+* The security group allows HTTP and HTTPS traffic from any IP address (`0.0.0.0/0`) on ports 80 and 443, respectively, as well as traffic from a private network (`10.0.0.0/16`) on port 22.
+* The configuration relies on the `aws_security_group` resource to define the security group's attributes, including ingress and egress rules, tags, and region information.
 
 <!-- LAB_NOTES_END -->
 
