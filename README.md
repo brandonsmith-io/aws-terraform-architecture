@@ -32,6 +32,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**22. Modules Local A**](./22-modules-local-A) | `22-modules-local-A` |
 | [**22. Modules Local B**](./22-modules-local-B) | `22-modules-local-B` |
 | [**23. Import**](./23-import) | `23-import` |
+| [**24. Remove Blocks**](./24-remove-blocks) | `24-remove-blocks` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -152,6 +153,11 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 * The Terraform configuration creates a single AWS Security Group (`aws_security_group "mysg"`), which is tied to a specific VPC (`vpc-078eb2ce40d163e90`) and is assigned a unique ID (`sg-0f9cb1823f10bf518`). 
 * The security group allows HTTP and HTTPS traffic from any IP address (`0.0.0.0/0`) on ports 80 and 443, respectively, as well as traffic from a private network (`10.0.0.0/16`) on port 22.
 * The configuration relies on the `aws_security_group` resource to define the security group's attributes, including ingress and egress rules, tags, and region information.
+
+### [24. Remove Blocks](./24-remove-blocks)
+* The `local_file` resource is a Terraform resource that manages a local file.
+* The `removed` resource is a Terraform resource that tracks the removal of the `local_file.foo` resource.
+* The `removed` resource is configured to ignore the lifecycle management of the `local_file.foo` resource, with `destroy = false`.
 
 <!-- LAB_NOTES_END -->
 
