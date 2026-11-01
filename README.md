@@ -34,6 +34,7 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 | [**23. Import**](./23-import) | `23-import` |
 | [**24. Remove Blocks**](./24-remove-blocks) | `24-remove-blocks` |
 | [**25. Multi Provider Configuration**](./25-multi-provider-configuration) | `25-multi-provider-configuration` |
+| [**26. Sensitive Parameter**](./26-sensitive-parameter) | `26-sensitive-parameter` |
 <!-- LAB_INDEX_END -->
 ---
 
@@ -164,6 +165,11 @@ Hands-on infrastructure automation and security labs following HashiCorp Terrafo
 * The Terraform configuration utilizes a multi-provider approach, where three AWS regions (ap-southeast-1, ap-south-1, and us-east-1) are provisioned with separate `aws` providers, each assigned an alias (mumbai, usa, and the root provider, respectively).
 * Resource `aws_security_group` "sg_1" and "sg_2" are defined within different providers (aws.usa and aws.mumbai, respectively), resulting in separate security groups with unique configurations for each region.
 * The `provider` attribute in each `aws_security_group` resource specifies the region in which the security group is provisioned, effectively creating a regional scope for the security groups.
+
+### [26. Sensitive Parameter](./26-sensitive-parameter)
+* The `local_sensitive_file` resource is used to create a file with sensitive data (`password`) in the Terraform working directory, tied to the `password` variable.
+* The `aws_db_instance` resource depends on the `db_user` variable, which is set to a default value, and the `password` variable, which is set to a fixed value 'foobarbaz' after being overridden.
+* The `aws_db_instance` resource creates an Amazon RDS instance with sensitive parameters (e.g. `username` and `password`) tied to Terraform-managed variables, while also using a fixed `password` value for the instance.
 
 <!-- LAB_NOTES_END -->
 
